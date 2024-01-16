@@ -2,7 +2,7 @@
 
 ---
 
-azure ml and azure mlops study notes
+Personal azure ml and azure mlops study notes. :)
 
 Main References:
 

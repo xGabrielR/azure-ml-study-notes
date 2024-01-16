@@ -1,0 +1,22 @@
+name: azure-login
+
+on: [push]
+
+# On github repo, click in settings
+# and in left side title click on secrets
+# and create new secret with AZURE_CREDENTIALS
+
+# To Get azure credentials JSON, folow this video:
+# https://youtu.be/ekia27KMJGc
+# https://github.com/MG-Microsoft/mlops-enterprise-template
+# https://microsoftlearning.github.io/mslearn-mlops/documentation/02-github-actions.html
+
+jobs:
+
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: log in to azure
+        uses: azure/login@v1
+        with:
+          creds: '${{secrets.AZURE_CREDENTIALS}}' 

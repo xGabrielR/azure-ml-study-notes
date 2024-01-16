@@ -1,0 +1,13 @@
+$schema: https://azuremlschemas.azureedge.net/latest/azureBlob.schema.json
+type: azure_blob
+
+name: blob_datastore
+description: Datastore pointing to a blob container.
+tags:
+  created_by: gabriel_r
+
+account_name: mytestblobstore
+container_name: data-container
+
+credentials:
+  account_key: a

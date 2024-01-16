@@ -1,0 +1,30 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+name: iris_data_preparation
+display_name: iris_data_preparation
+description: Preprocessing iris dataset
+
+tags:
+  crated_by: gabriel_r
+
+version: 1
+type: command
+
+inputs:
+  input_data: 
+    type: uri_file
+
+outputs:
+  train_output_data:
+    type: uri_file
+
+  test_output_data:
+    type: uri_file
+
+code: ./src
+environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
+
+command: >-
+  python prep.py 
+  --input_data ${{inputs.input_data}}
+  --train_output_data ${{outputs.train_output_data}}
+  --test_output_data ${{outputs.test_output_data}}

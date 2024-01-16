@@ -1,0 +1,21 @@
+$schema: https://azuremlschemas.azureedge.net/latest/MLTable.schema.json
+
+type: mltable
+
+# File Paths
+paths:
+  - file: https://azuremlexamples.blob.core.windows.net/datasets/iris.csv
+
+# Apply Transformations
+transformations:
+
+  - read_delimited:
+    delimiter: ","
+    header: all_files_same_headers
+    include_path_column: true
+    empty_as_string: false
+
+  - convert_column_types:
+  
+    - columns: [sepal_length, sepal_width, petal_length, petal_width]
+      column_type: float

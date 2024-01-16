@@ -1,0 +1,10 @@
+$schema: https://azuremlschemas.azureedge.net/latest/azureDataLakeGen2.schema.json
+type: azure_data_lake_gen2
+
+name: adls_gen2_credless
+description: Credential-less datastore pointing to an Azure Data Lake Storage Gen2.
+tags:
+  created_by: gabriel_r
+
+account_name: mytestdatalakegen2
+filesystem: my-gen2-container

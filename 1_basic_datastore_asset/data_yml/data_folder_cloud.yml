@@ -1,0 +1,13 @@
+$schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
+
+# for folder, you need to change the type
+type: uri_folder
+
+name: cloud_folder
+description: Data asset created from folder in cloud.
+tags:
+  created_by: gabriel_r
+
+# You only need to change the path for
+# https, wasbs or from azuremlai (datastore)
+path: wasbs://account-name.blob.core.windows.net/container-name/example-data/

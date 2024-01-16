@@ -1,0 +1,79 @@
+display_name: iris_logistic_pipeline
+description: iris logistic pipeline
+
+tags:
+  created_by: gabriel_r
+
+type: pipeline
+inputs:
+  pipeline_job_input:
+    type: uri_file
+    path: azureml:iris_dataset:1
+outputs:
+  pipeline_job_train_data:
+    type: uri_file
+  pipeline_job_test_data:
+    type: uri_file
+
+jobs:
+
+  prep_data_job:
+    type: command
+    inputs:
+      input_data:
+        path: ${{parent.inputs.pipeline_job_input}}
+    outputs:
+      train_output_data: ${{parent.outputs.pipeline_job_train_data}}
+      test_output_data: ${{parent.outputs.pipeline_job_test_data}}
+    component:
+      $schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+      name: iris_data_preparation
+      version: '1'
+      display_name: iris_data_preparation
+      description: Preprocessing iris dataset
+      tags:
+        crated_by: gabriel_r
+      type: command
+      inputs:
+        input_data:
+          type: uri_file
+      outputs:
+        train_output_data:
+          type: uri_file
+        test_output_data:
+          type: uri_file
+      command: python prep.py  --input_data ${{inputs.input_data}} --train_output_data
+        ${{outputs.train_output_data}} --test_output_data ${{outputs.test_output_data}}
+      environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
+      code: /home/grc/arep/azure_ml/6_pipelines/pipelines/components/prep_data_from_yml_file/src
+      is_deterministic: true
+
+  train_model_job:
+    type: command
+    inputs:
+      train_input_data:
+        path: ${{parent.jobs.prep_data_job.outputs.train_output_data}}
+      test_input_data:
+        path: ${{parent.jobs.prep_data_job.outputs.test_output_data}}
+    component:
+      $schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+      name: iris_train_logistic
+      version: '1'
+      display_name: iris_train_logistic
+      description: Train Logistic Regression model to Iris preprocessed dataset
+      tags:
+        crated_by: gabriel_r
+      type: command
+      inputs:
+        train_input_data:
+          type: uri_file
+        test_input_data:
+          type: uri_file
+      command: python train_model.py  --train_input_data ${{inputs.train_input_data}}
+        --test_input_data ${{inputs.test_input_data}}
+      environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
+      code: /home/grc/arep/azure_ml/6_pipelines/pipelines/components/train_model_from_yml_file/src
+      is_deterministic: true
+
+compute: azureml:aml-cluster
+experiment_name: iris_logistic_pipeline

@@ -1,0 +1,11 @@
+$schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
+type: uri_file
+
+name: cloud_file_iris
+description: Data asset created from file in cloud.
+tags:
+  created_by: gabriel_r
+
+# You only need to change the path for
+# https, wasbs or from azuremlai (datastore)
+path: azureml://datastores/workspaceblobstore/paths/example-data/titanic.csv

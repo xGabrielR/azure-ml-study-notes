@@ -1,0 +1,9 @@
+$schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
+type: uri_file
+
+name: local_file_iris
+description: Data asset created from file local.
+tags:
+  created_by: gabriel_r
+
+path: /home/grc/.../iris/iris.csv
